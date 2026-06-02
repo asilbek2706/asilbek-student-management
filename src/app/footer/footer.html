@@ -1,0 +1,50 @@
+<footer class="bg-slate-950/80 backdrop-blur-md w-full text-gray-400 border-t border-slate-800/60 mt-auto shadow-inner">
+  <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center space-x-3 group">
+        <div class="h-6 w-1.5 bg-orange-500 rounded-full shadow-lg shadow-orange-500/50 transition duration-300 group-hover:scale-y-110"></div>
+        <a routerLink="/" class="outline-none">
+          <span class="text-white font-bold tracking-tight text-lg hover:text-orange-500 transition duration-200">
+            Student<span class="text-orange-500">MS</span>
+          </span>
+        </a>
+      </div>
+
+      <div class="flex flex-wrap justify-center items-center gap-2 p-1 bg-slate-900/40 border border-slate-800/50 rounded-xl backdrop-blur-sm">
+        <a
+          routerLink="/"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="bg-orange-500 text-white shadow-md shadow-orange-500/20"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition duration-200 outline-none"
+        >
+          Home
+        </a>
+
+        <a
+          routerLink="/students"
+          routerLinkActive="bg-orange-500 text-white shadow-md shadow-orange-500/20"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition duration-200 outline-none"
+        >
+          Students
+        </a>
+
+        <a
+          routerLink="/create"
+          routerLinkActive="bg-orange-500 text-white shadow-md shadow-orange-500/20"
+          class="px-3.5 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase text-slate-400 hover:text-white transition duration-200 outline-none"
+        >
+          Create
+        </a>
+      </div>
+
+      <div class="text-xs text-gray-100 text-center md:text-right select-none">
+        <p class="font-medium">&copy; {{ currentYear }} SMS. All rights reserved.</p>
+        <p class="mt-1 font-mono text-[10px] tracking-widest uppercase text-slate-300 font-semibold">
+          Consistency beats talent
+        </p>
+      </div>
+
+    </div>
+  </div>
+</footer>

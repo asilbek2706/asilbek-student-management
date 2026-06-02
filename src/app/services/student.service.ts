@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { StudentFormInterface } from '../model/student-form.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentService {
   private students: StudentFormInterface[] = [];
+  private http = inject(HttpClient);
 
   constructor() {
     const savedStudents = localStorage.getItem('students');
