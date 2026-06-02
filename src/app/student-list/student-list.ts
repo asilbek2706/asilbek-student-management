@@ -23,7 +23,8 @@ export class StudentList implements OnInit {
     console.log('Edit bosildi:', student);
   }
 
-  onDelete(id: number | undefined): void {
-    console.log('Delete bosildi, ID:', id);
+  onDelete(student: StudentFormInterface):void{
+    this.studentService.deleteStudent(student.id)
+    this.studentList = this.studentService.getStudents();
   }
 }

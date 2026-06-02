@@ -25,10 +25,7 @@ export class StudentForm {
     }),
     email: new FormControl('', {
       nonNullable: true,
-      validators: [
-        Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9._%+-]+@acharya\.ac\.uz$/),
-      ],
+      validators: [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@acharya\.ac\.uz$/)],
     }),
     phoneNumber: new FormControl('', {
       nonNullable: true,
@@ -48,10 +45,7 @@ export class StudentForm {
 
     studentId: new FormControl('', {
       nonNullable: true,
-      validators: [
-        Validators.required,
-        Validators.pattern(/^[A-Z]{3}\d{2}[A-Z]{3}\d{3}$/),
-      ],
+      validators: [Validators.required, Validators.pattern(/^[A-Z]{3}\d{2}[A-Z]{3}\d{3}$/)],
     }),
     enrollmentDate: new FormControl('', {
       nonNullable: true,
@@ -65,7 +59,7 @@ export class StudentForm {
       nonNullable: true,
       validators: Validators.required,
     }),
-    status: new FormControl('active', {
+    status: new FormControl('', {
       nonNullable: true,
       validators: Validators.required,
     }),
@@ -90,47 +84,71 @@ export class StudentForm {
     }),
   });
 
-  onSubmit(): void {
-  // 1. Agar forma xato to'ldirilgan bo'lsa, submitni to'xtatamiz
-  if (this.studentForm.invalid) {
-    this.studentForm.markAllAsTouched();
-    return;
+  constructor() {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      const student = this.studentService.getStudentById(+id);
+      if (student) {
+        this.studentForm.patchValue({
+          firstName: student.firstName,
+          lastName: student.lastName,
+          email: student.email,
+          phoneNumber: student.phoneNumber,
+          birthDate: student.birthDate ? new Date(student.birthDate).toISOString().substring(0, 10) : '',
+          gender: student.gender,
+          studentId: student.studentId,
+          enrollmentDate: student.enrollmentDate
+            ? new Date(student.enrollmentDate).toISOString().substring(0, 10) : '',
+          branch: student.branch,
+          course: student.course ? student.course.toString() : '',
+          status: student.status,
+          address: {
+            street: student.address?.street || '',
+            city: student.address?.city || '',
+            state: student.address?.state || '',
+            zipCode: student.address?.zipCode || '',
+          },
+        });
+      }
+    }
   }
 
-  // 2. Formadagi qiymatlarni interfeys turiga majburiy o'tkazamiz (Type Casting)
-  // rawValue() formadagi barcha qiymatlarni undefined'siz, toza obyekt qilib beradi
-  const formValues = this.studentForm.getRawValue();
-  
-  const studentData = {
-    ...formValues,
-    course: Number(formValues.course) as 1 | 2 | 3 | 4,
-    gender: formValues.gender as 'Male' | 'Female' | 'Other',
-    branch: formValues.branch as 'B.TECH' | 'BCA',
-    status: formValues.status as 'active' | 'suspended' | 'graduated'
-  };
+  onSubmit(): void {
+    if (this.studentForm.invalid) {
+      this.studentForm.markAllAsTouched();
+      return;
+    }
 
-  const id = this.activatedRoute.snapshot.paramMap.get('id');
+    const formValues = this.studentForm.getRawValue();
 
-  if (id) {
-    const existingStudent = this.studentService.getStudentById(Number(id));
-    if (existingStudent) {
-      this.studentService.updateStudent(existingStudent.id!, {
-        ...studentData,
-        id: existingStudent.id,
-      });
+    const studentData = {
+      ...formValues,
+      course: Number(formValues.course) as 1 | 2 | 3 | 4,
+      gender: formValues.gender as 'Male' | 'Female' | 'Other',
+      branch: formValues.branch as 'B.TECH' | 'BCA',
+      status: formValues.status as 'active' | 'suspended' | 'graduated',
+    };
+
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+
+    if (id) {
+      const existingStudent = this.studentService.getStudentById(+id);
+      if (existingStudent) {
+        this.studentService.updateStudent(existingStudent.id!, {
+          ...studentData,
+          id: existingStudent.id,
+        });
+        this.studentForm.reset();
+        this.router.navigate(['/students']);
+        return;
+      }
+    } else {
+      const newId = Date.now();
+      const data = { ...studentData, id: newId };
+      this.studentService.addStudent(data);
       this.studentForm.reset();
       this.router.navigate(['/students']);
       return;
     }
   }
-
-  const newStudent = { 
-    ...studentData, 
-    id: Date.now() 
-  };
-  
-  this.studentService.addStudent(newStudent);
-  this.studentForm.reset();
-  this.router.navigate(['/students']);
-}
 }

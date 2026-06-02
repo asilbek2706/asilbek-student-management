@@ -1,16 +1,17 @@
-<div class="max-w-4xl mx-auto my-8 mt-12 p-6 sm:p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
-  
+<div
+  class="max-w-4xl mx-auto my-8 mt-12 p-6 sm:p-8 bg-white rounded-2xl shadow-xl border border-gray-100"
+>
   <div class="flex items-center space-x-3 mb-8 border-b border-gray-100 pb-4">
     <div class="h-7 w-2 bg-orange-500 rounded-full"></div>
     <h2 class="text-2xl font-bold text-gray-800 tracking-tight">Create New Student</h2>
   </div>
 
   <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" class="space-y-8">
-    
     <div>
-      <h3 class="text-base font-semibold text-gray-500 uppercase tracking-wider mb-4">Personal Information</h3>
+      <h3 class="text-base font-semibold text-gray-500 uppercase tracking-wider mb-4">
+        Personal Information
+      </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         <div>
           <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
           <input
@@ -21,7 +22,9 @@
             class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
           />
           @if (studentForm.get('firstName')?.touched && studentForm.get('firstName')?.invalid) {
-            <p class="text-red-500 text-xs mt-1 font-medium">First name is required (min 2 characters).</p>
+            <p class="text-red-500 text-xs mt-1 font-medium">
+              First name is required (min 2 characters).
+            </p>
           }
         </div>
 
@@ -35,7 +38,9 @@
             class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
           />
           @if (studentForm.get('lastName')?.touched && studentForm.get('lastName')?.invalid) {
-            <p class="text-red-500 text-xs mt-1 font-medium">Last name is required (min 2 characters).</p>
+            <p class="text-red-500 text-xs mt-1 font-medium">
+              Last name is required (min 2 characters).
+            </p>
           }
         </div>
 
@@ -49,12 +54,16 @@
             class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
           />
           @if (studentForm.get('email')?.touched && studentForm.get('email')?.invalid) {
-            <p class="text-red-500 text-xs mt-1 font-medium">Please enter a valid @acharya.ac.uz email.</p>
+            <p class="text-red-500 text-xs mt-1 font-medium">
+              Please enter a valid @acharya.ac.uz email.
+            </p>
           }
         </div>
 
         <div>
-          <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number</label>
+          <label for="phoneNumber" class="block text-sm font-medium text-gray-700"
+            >Phone Number</label
+          >
           <input
             id="phoneNumber"
             formControlName="phoneNumber"
@@ -96,14 +105,14 @@
             <p class="text-red-500 text-xs mt-1 font-medium">Please select a gender.</p>
           }
         </div>
-
       </div>
     </div>
 
     <div class="border-t border-gray-100 pt-6">
-      <h3 class="text-base font-semibold text-gray-500 uppercase tracking-wider mb-4">Academic Information</h3>
+      <h3 class="text-base font-semibold text-gray-500 uppercase tracking-wider mb-4">
+        Academic Information
+      </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
         <div>
           <label for="studentId" class="block text-sm font-medium text-gray-700">Student ID</label>
           <input
@@ -119,15 +128,21 @@
         </div>
 
         <div>
-          <label for="enrollmentDate" class="block text-sm font-medium text-gray-700">Enrollment Date</label>
+          <label for="enrollmentDate" class="block text-sm font-medium text-gray-700"
+            >Enrollment Date</label
+          >
           <input
             id="enrollmentDate"
             formControlName="enrollmentDate"
             type="date"
             class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
           />
-          @if (studentForm.get('enrollmentDate')?.touched && studentForm.get('enrollmentDate')?.invalid) {
-            <p class="text-red-500 text-xs mt-1 font-medium">Please enter a valid enrollment date.</p>
+          @if (
+            studentForm.get('enrollmentDate')?.touched && studentForm.get('enrollmentDate')?.invalid
+          ) {
+            <p class="text-red-500 text-xs mt-1 font-medium">
+              Please enter a valid enrollment date.
+            </p>
           }
         </div>
 
@@ -172,6 +187,7 @@
             formControlName="status"
             class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none bg-white transition duration-200"
           >
+            <option value="" disabled selected>Select Status</option>
             <option value="active">Active</option>
             <option value="suspended">Suspended</option>
             <option value="graduated">Graduated</option>
@@ -180,64 +196,95 @@
             <p class="text-red-500 text-xs mt-1 font-medium">Please select a status.</p>
           }
         </div>
-
       </div>
     </div>
 
     <div formGroupName="address" class="border-t border-gray-100 pt-6">
-      <h3 class="text-base font-semibold text-gray-500 uppercase tracking-wider mb-4">Address Details</h3>
+      <h3 class="text-base font-semibold text-gray-500 uppercase tracking-wider mb-4">
+        Address Details
+      </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         <div>
           <label for="street" class="block text-sm font-medium text-gray-700">Street</label>
-          <input id="street" formControlName="street" type="text" placeholder="123 Main St" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200" />
-          @if (studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid) {
+          <input
+            id="street"
+            formControlName="street"
+            type="text"
+            placeholder="123 Main St"
+            class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
+          />
+          @if (
+            studentForm.get('address.street')?.touched && studentForm.get('address.street')?.invalid
+          ) {
             <p class="text-red-500 text-xs mt-1 font-medium">Street is required.</p>
           }
         </div>
 
         <div>
           <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-          <input id="city" formControlName="city" type="text" placeholder="Tashkent" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200" />
-          @if (studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid) {
+          <input
+            id="city"
+            formControlName="city"
+            type="text"
+            placeholder="Tashkent"
+            class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
+          />
+          @if (
+            studentForm.get('address.city')?.touched && studentForm.get('address.city')?.invalid
+          ) {
             <p class="text-red-500 text-xs mt-1 font-medium">City is required.</p>
           }
         </div>
 
         <div>
           <label for="state" class="block text-sm font-medium text-gray-700">State / Region</label>
-          <input id="state" formControlName="state" type="text" placeholder="Tashkent Region" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200" />
-          @if (studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid) {
+          <input
+            id="state"
+            formControlName="state"
+            type="text"
+            placeholder="Tashkent Region"
+            class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
+          />
+          @if (
+            studentForm.get('address.state')?.touched && studentForm.get('address.state')?.invalid
+          ) {
             <p class="text-red-500 text-xs mt-1 font-medium">State/Region is required.</p>
           }
         </div>
 
         <div>
           <label for="zipCode" class="block text-sm font-medium text-gray-700">Zip Code</label>
-          <input id="zipCode" formControlName="zipCode" type="text" placeholder="100000" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200" />
-          @if (studentForm.get('address.zipCode')?.touched && studentForm.get('address.zipCode')?.invalid) {
+          <input
+            id="zipCode"
+            formControlName="zipCode"
+            type="text"
+            placeholder="100000"
+            class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500 sm:text-sm outline-none transition duration-200"
+          />
+          @if (
+            studentForm.get('address.zipCode')?.touched &&
+            studentForm.get('address.zipCode')?.invalid
+          ) {
             <p class="text-red-500 text-xs mt-1 font-medium">Zip code must be 6 digits.</p>
           }
         </div>
-
       </div>
     </div>
 
     <div class="flex justify-end pt-6 border-t border-gray-100 space-x-3">
       <button
         type="button"
-        class="px-5 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-lg text-sm hover:bg-gray-50 transition duration-200"
+        class="cursor-pointer px-5 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-lg text-sm hover:bg-gray-50 transition duration-200"
       >
         Cancel
       </button>
       <button
         type="submit"
         [disabled]="studentForm.invalid"
-        class="px-6 py-2.5 bg-orange-500 text-white font-semibold rounded-lg text-sm shadow-md hover:bg-orange-600 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:shadow-none transition duration-200"
+        class="px-6 py-2.5 bg-orange-500 text-white font-semibold rounded-lg text-sm shadow-md hover:bg-orange-600 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed disabled:shadow-none transition duration-200 cursor-pointer"
       >
         Save Student
       </button>
     </div>
-
   </form>
 </div>

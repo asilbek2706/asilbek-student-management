@@ -20,7 +20,7 @@ export const routes: Routes = [
         title: 'Create Student'
     },
     {
-        path: "edit/:slug",
+        path: "edit/:id",
         component: StudentForm,
         title: 'Edit Student'
     }
