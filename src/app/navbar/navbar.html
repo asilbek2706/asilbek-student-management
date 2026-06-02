@@ -1,17 +1,37 @@
-<header class="bg-slate-950 fixed w-full top-0 text-white shadow-md border-b border-slate-800">
-  <div class="container mx-auto flex items-center justify-between py-5 px-6">
+<header class="bg-slate-950 fixed w-full top-0 text-white shadow-md border-b border-slate-800 z-50">
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+    
+    <!-- Logo qismi -->
     <a routerLink="/" class="flex items-center space-x-2 group">
-      <div
-        class="h-8 w-2 bg-orange-500 rounded-full group-hover:scale-y-110 transition-transform duration-300"
-      ></div>
-      <p
-        class="text-xl font-extrabold tracking-tight bg-linear-to-r from-white to-slate-300 bg-clip-text text-transparent"
-      >
+      <div class="h-8 w-2 bg-orange-500 rounded-full group-hover:scale-y-110 transition-transform duration-300"></div>
+      <p class="text-xl font-extrabold tracking-tight bg-linear-to-r from-white to-slate-300 bg-clip-text text-transparent hidden sm:block">
         Student Management System
+      </p>
+      <!-- Mobilda qisqa nom ko'rinishi uchun -->
+      <p class="text-xl font-extrabold tracking-tight bg-linear-to-r from-white to-slate-300 bg-clip-text text-transparent sm:hidden">
+        SMS
       </p>
     </a>
 
-    <nav class="flex items-center space-x-1 sm:space-x-2">
+    <!-- Hambuger Tugmasi (Faqat mobil ekranlarda md:hidden yordamida ko'rinadi) -->
+    <button 
+      (click)="toggleMenu()" 
+      class="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none transition-colors"
+      aria-label="Menyuni ochish/yopish"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        @if (!isMenuOpen()) {
+          <!-- Gamburger chiziqlari -->
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        } @else {
+          <!-- Yopish (X) belgisi -->
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        }
+      </svg>
+    </button>
+
+    <!-- Katta ekranlar uchun Navigatsiya (md:flex) -->
+    <nav class="hidden md:flex items-center space-x-2">
       <a
         routerLink="/"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -38,4 +58,37 @@
       </a>
     </nav>
   </div>
+
+  <!-- Mobil Menyu (Faqat isMenuOpen() true bo'lganda va kichik ekranlarda ochiladi) -->
+  @if (isMenuOpen()) {
+    <nav class="md:hidden border-t border-slate-800 bg-slate-950 px-6 py-4 flex flex-col space-y-2 fade-in">
+      <a
+        routerLink="/"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+        (click)="closeMenu()"
+        class="px-4 py-2 rounded-lg text-sm font-medium tracking-wide uppercase text-slate-300 hover:text-white hover:bg-slate-800 transition duration-300 block"
+      >
+        Home
+      </a>
+
+      <a
+        routerLink="/students"
+        routerLinkActive="bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+        (click)="closeMenu()"
+        class="px-4 py-2 rounded-lg text-sm font-medium tracking-wide uppercase text-slate-300 hover:text-white hover:bg-slate-800 transition duration-300 block"
+      >
+        Students
+      </a>
+
+      <a
+        routerLink="/create"
+        routerLinkActive="bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+        (click)="closeMenu()"
+        class="px-4 py-2 rounded-lg text-sm font-medium tracking-wide uppercase text-slate-300 hover:text-white hover:bg-slate-800 transition duration-300 block"
+      >
+        Create Student
+      </a>
+    </nav>
+  }
 </header>
