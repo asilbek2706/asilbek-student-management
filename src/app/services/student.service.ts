@@ -8,28 +8,28 @@ import { Observable } from 'rxjs';
 })
 export class StudentService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/students';
+  private apiUrl = 'https://6a1fb7f0e96c1d13b586306b.mockapi.io/';
 
   getStudents(): Observable<StudentFormInterface[]> {
-    return this.http.get<StudentFormInterface[]>(this.apiUrl);
+    return this.http.get<StudentFormInterface[]>(`${this.apiUrl}/students`);
   }
 
   getStudentById(id: string | number): Observable<StudentFormInterface> {
-    return this.http.get<StudentFormInterface>(`${this.apiUrl}/${id}`);
+    return this.http.get<StudentFormInterface>(`${this.apiUrl}/students/${id}`);
   }
 
   addStudent(student: Omit<StudentFormInterface, 'id'>): Observable<StudentFormInterface> {
-    return this.http.post<StudentFormInterface>(this.apiUrl, student);
+    return this.http.post<StudentFormInterface>(`${this.apiUrl}/students`, student);
   }
 
   updateStudent(
     id: string | number,
     updatedStudent: StudentFormInterface,
   ): Observable<StudentFormInterface> {
-    return this.http.put<StudentFormInterface>(`${this.apiUrl}/${id}`, updatedStudent);
+    return this.http.put<StudentFormInterface>(`${this.apiUrl}/students/${id}`, updatedStudent);
   }
 
   deleteStudent(id: string | number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/students/${id}`);
   }
 }
