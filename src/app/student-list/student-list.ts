@@ -33,7 +33,14 @@ export class StudentList implements OnInit {
   }
 
   onDelete(student: StudentFormInterface):void{
-    // this.studentService.deleteStudent(student.id)
-    // this.studentList = this.studentService.getStudents();
+    this.studentService.deleteStudent(student.id).subscribe({
+      next: () => {
+        this.studentList = this.studentList.filter((currentStudent) => currentStudent.id !== student.id);
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error deleting student:', error);
+      },
+    });
   }
 }

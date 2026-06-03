@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { StudentService } from '../services/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StudentFormInterface } from '../model/student-form.interface';
 
 @Component({
   selector: 'app-student-create',
@@ -9,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './student-form.html',
   standalone: true,
 })
-export class StudentForm {
+export class StudentForm implements OnInit {
   studentService = inject(StudentService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
@@ -84,71 +85,92 @@ export class StudentForm {
     }),
   });
 
-  constructor() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if (id) {
-      const student = this.studentService.getStudentById(+id);
-      if (student) {
-        this.studentForm.patchValue({
-          firstName: student.firstName,
-          lastName: student.lastName,
-          email: student.email,
-          phoneNumber: student.phoneNumber,
-          birthDate: student.birthDate ? new Date(student.birthDate).toISOString().substring(0, 10) : '',
-          gender: student.gender,
-          studentId: student.studentId,
-          enrollmentDate: student.enrollmentDate
-            ? new Date(student.enrollmentDate).toISOString().substring(0, 10) : '',
-          branch: student.branch,
-          course: student.course ? student.course.toString() : '',
-          status: student.status,
-          address: {
-            street: student.address?.street || '',
-            city: student.address?.city || '',
-            state: student.address?.state || '',
-            zipCode: student.address?.zipCode || '',
-          },
-        });
-      }
+  ngOnInit(): void {
+    const studentId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (studentId) {
+      this.loadStudent(studentId);
     }
   }
 
-  onSubmit(): void {
-    if (this.studentForm.invalid) {
-      this.studentForm.markAllAsTouched();
-      return;
-    }
+  loadStudent(studentId: string): void {
+    this.studentService
+      .getStudentById(studentId)
+      .subscribe({
+        next: (data) => {
+          this.studentForm.patchValue({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            birthDate: data.birthDate
+              ? new Date(data.birthDate).toISOString().substring(0, 10)
+              : '',
+            gender: data.gender,
+            studentId: data.studentId,
+            enrollmentDate: data.enrollmentDate
+              ? new Date(data.enrollmentDate).toISOString().substring(0, 10)
+              : '',
+            branch: data.branch,
+            course: data.course ? data.course.toString() : '',
+            status: data.status,
+            address: {
+              street: data.address?.street || '',
+              city: data.address?.city || '',
+              state: data.address?.state || '',
+              zipCode: data.address?.zipCode || '',
+            },
+          });
+        },
+        error: (error) => {
+          console.error('Error loading student:', error);
+        },
+      });
+  }
 
-    const formValues = this.studentForm.getRawValue();
+  private buildStudentPayload(): Omit<StudentFormInterface, 'id'> {
+    const studentData = this.studentForm.getRawValue();
 
-    const studentData = {
-      ...formValues,
-      course: Number(formValues.course) as 1 | 2 | 3 | 4,
-      gender: formValues.gender as 'Male' | 'Female' | 'Other',
-      branch: formValues.branch as 'B.TECH' | 'BCA',
-      status: formValues.status as 'active' | 'suspended' | 'graduated',
+    return {
+      ...studentData,
+      course: Number(studentData.course) as StudentFormInterface['course'],
+      gender: studentData.gender as StudentFormInterface['gender'],
+      branch: studentData.branch as StudentFormInterface['branch'],
+      status: studentData.status as StudentFormInterface['status'],
     };
+  }
 
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
+  onSubmit(): void {
+    const studentId = this.activatedRoute.snapshot.paramMap.get('id');
+    const studentData = this.buildStudentPayload();
 
-    if (id) {
-      const existingStudent = this.studentService.getStudentById(+id);
-      if (existingStudent) {
-        this.studentService.updateStudent(existingStudent.id!, {
-          ...studentData,
-          id: existingStudent.id,
-        });
-        this.studentForm.reset();
-        this.router.navigate(['/students']);
-        return;
-      }
+    if (studentId) {
+      this.studentService.getStudentById(studentId).subscribe({
+        next: (student) => {
+          this.studentService
+            .updateStudent(studentId, { ...studentData, id: student.id })
+            .subscribe({
+              next: () => {
+                this.router.navigate(['/students']);
+              },
+              error: (error) => {
+                console.error('Error updating student:', error);
+              },
+            });
+        },
+        error: (error) => {
+          console.error('Error fetching student for update:', error);
+        },
+      });
     } else {
-      const newId = Date.now();
-      const data = { ...studentData, id: newId };
-      this.studentService.addStudent(data);
-      this.studentForm.reset();
-      this.router.navigate(['/students']);
-      return;
+      this.studentService.addStudent(studentData).subscribe({
+        next: () => {
+          this.studentForm.reset();
+          this.router.navigate(['/students']);
+        },
+        error: (error) => {
+          console.error('Error creating student:', error);
+        },
+      });
     }
   }
 }

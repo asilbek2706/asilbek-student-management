@@ -18,7 +18,7 @@
         "state": "CA",
         "zipCode": "12345"
       },
-      "id": "OtOG4dctDKM"
+      "id": 1
     },
     {
       "firstName": "John",
@@ -58,7 +58,7 @@
         "state": "CA",
         "zipCode": "12345"
       },
-      "id": "Zk8KVP0u3zs"
+      "id": 2
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
