@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { StudentFormInterface } from '../model/student-form.interface';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class StudentService {
   private students: StudentFormInterface[] = [];
   private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000';
 
   constructor() {
     const savedStudents = localStorage.getItem('students');
@@ -16,8 +18,8 @@ export class StudentService {
     }
   }
 
-  getStudents(): StudentFormInterface[] {
-    return this.students;
+  getStudents(): Observable<StudentFormInterface[]> {
+    return this.http.get<StudentFormInterface[]>(`${this.apiUrl}/students`);
   }
 
   getStudentById(id: number): StudentFormInterface | undefined {

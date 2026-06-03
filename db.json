@@ -1,0 +1,65 @@
+{
+  "students": [
+    {
+      "firstName": "Asilbek",
+      "lastName": "Karomatov",
+      "email": "asilbek@acharya.ac.uz",
+      "phoneNumber": "+998507536636",
+      "birthDate": "1990-01-01",
+      "gender": "Male",
+      "studentId": "ABT24CCS014",
+      "enrollmentDate": "2023-09-01",
+      "branch": "B.TECH",
+      "course": 2,
+      "status": "active",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zipCode": "12345"
+      },
+      "id": "OtOG4dctDKM"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@acharya.ac.uz",
+      "phoneNumber": "+998101234567",
+      "birthDate": "1990-01-01",
+      "gender": "Male",
+      "studentId": "ABT24CCS014",
+      "enrollmentDate": "2023-09-01",
+      "branch": "B.TECH",
+      "course": 2,
+      "status": "suspended",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zipCode": "12345"
+      },
+      "id": "waqPb7XupQc"
+    },
+    {
+      "firstName": "Sunnat",
+      "lastName": "Davronov",
+      "email": "sunnat@acharya.ac.uz",
+      "phoneNumber": "+998888888888",
+      "birthDate": "1950-01-01",
+      "gender": "Female",
+      "studentId": "ABT24CCS007",
+      "enrollmentDate": "2024-09-01",
+      "branch": "B.TECH",
+      "course": 2,
+      "status": "graduated",
+      "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zipCode": "12345"
+      },
+      "id": "Zk8KVP0u3zs"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
