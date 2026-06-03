@@ -4,11 +4,11 @@ export interface StudentFormInterface {
   lastName: string;
   email: string;
   phoneNumber: string;
-  birthDate: string | Date;
+  birthDate: string;
   gender: 'Male' | 'Female' | 'Other';
 
   studentId: string;
-  enrollmentDate: string | Date;
+  enrollmentDate: string;
   branch: 'B.TECH' | 'BCA';
   course: 1 | 2 | 3 | 4;
   status: 'active' | 'suspended' | 'graduated';
