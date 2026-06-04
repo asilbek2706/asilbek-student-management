@@ -117,12 +117,11 @@ export class StudentForm implements OnInit {
       // Yangi student qo'shish rejimi
       this.studentService.addStudent(studentData).subscribe({
         next: () => {
-          console.log('Yangi student muvaffaqiyatli qo\'shildi');
           this.studentForm.reset();
           this.router.navigate(['/students']);
         },
         error: (error) => {
-          console.error('Student qo\'shishda xatolik:', error);
+            throw new Error('Studentni qo\'shishda xatolik: ' + error.message);
         },
       });
     }
